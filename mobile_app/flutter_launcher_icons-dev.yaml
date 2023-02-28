@@ -1,0 +1,13 @@
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path_ios: "assets/dev_assets/icon-dev.png"
+  adaptive_icon_background: "#FFFFFF"
+  image_path: "assets/dev_assets/icon-dev-adaptive.png"
+  adaptive_icon_foreground: "assets/dev_assets/icon-dev-adaptive.png"
+
+# app icon resources for flutter_launcher_icons
+# to re-generate app icon from dev_assets, 
+# run below command to generate => 
+# flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-*

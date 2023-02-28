@@ -1,0 +1,82 @@
+#!/bin/bash
+#### ALL FUNCTIONS
+validatedModule = 0
+
+runScript(){
+    cd $appDir"/mobile_app" && echoInfo "Execute commands " && executeCommands
+    cd $appDir
+}
+
+executeCommands(){
+  for command in "${commands[@]}"; do
+    if [ $command == "reload" ]; then
+      executeGetPackages
+      executeGenerate
+    fi
+    if [ $command == "gen" ]; then
+      executeGenerate
+    fi
+    if [ $command == "get" ]; then
+      executeGetPackages
+    fi
+    if [ $command == "clean" ]; then
+      executeClean
+    fi
+    if [ $command == "genAppIcon" ]; then
+      executeGenerateAppIcons
+    fi
+  done
+}
+
+executeGenerateAppIcons(){
+  echoCommandInfo "GENERATE APP ICONS"
+  flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-*
+}
+
+executeGenerate(){
+  echoCommandInfo "GENERATE MODEL CLASSES"
+  flutter packages pub run build_runner build --delete-conflicting-outputs
+}
+
+executeGetPackages(){
+  echoCommandInfo "GET PACKAGES"
+  flutter packages get
+}
+
+executeClean(){
+  echoCommandInfo "CLEAN BUILD"
+  flutter clean
+}
+
+echoInfo(){
+  c_echo "GREEN"  "=====>  $1"
+}
+
+echoCommandInfo(){
+  c_echo "YELLOW"  "==========>  $1"
+}
+
+echoError(){
+  c_echo "RED"  "=====> ERROR:  $1  <====="
+}
+
+c_echo(){
+    bold=$(tput bold)
+    RED="\033[0;31m"
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    NC='\033[0m' # No Color
+    printf "${!1}${bold}${2} ${NC}\n"
+}
+
+clear
+appDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+commands=( "$@" )
+commandsLength=${#commands[@]}
+if [ $commandsLength -eq 0 ]; then
+  echoError "You need to enter one or more command names, name should be: format/generate"
+  exit 1
+fi
+
+runScript

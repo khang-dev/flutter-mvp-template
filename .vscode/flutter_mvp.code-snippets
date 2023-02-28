@@ -1,0 +1,16 @@
+{
+	"MVP - Create View": {
+		"prefix": "screenv",
+		"description": "Create a Screen extended from BaseScreenState",
+		"body": [
+			"import 'package:flutter/material.dart';\n\nimport '../../../core/mvp/base_ui.dart';\nimport '../../../core/mvp/base_view_state.dart';\n\nabstract class ${name}UI extends BaseUI {\n  void showData(${name}ViewData viewData);\n}\n\nclass ${name}Screen extends StatefulWidget {\n  static const String routeName = '/${name}Screen';\n\n  const ${name}Screen({Key? key}) : super(key: key);\n\n  @override\n  State<StatefulWidget> createState() => ${name}ScreenState();\n}\n\nclass ${name}ScreenState extends BaseViewState<${name}Screen, ${name}Presenter>\n    implements ${name}UI {\n  ${name}ViewData _viewData = ${name}ViewData();\n\n  @override\n  void initState() {\n    super.initState();\n  }\n\n  @override\n  ${name}Presenter buildPresenter() {\n    return ${name}Presenter(this);\n  }\n\n  @override\n  Widget buildContent(BuildContext context) {\n    return Container();\n  }\n\n  @override\n  void showData(${name}ViewData viewData) {\n    setState(() {\n      _viewData = viewData;\n    });\n  }\n}\n"
+		]
+	  },
+	  "MVP - Create Presenter": {
+		"prefix": "screenp",
+		"description": "Create a Presenter",
+		"body": [
+			"import '../../../core/mvp/base_presenter.dart';\n\nclass ${name}Presenter extends BasePresenter<${name}UI> {\n  ${name}Presenter(${name}UI ui) : super(ui);\n\n  @override\n  void onInitState() {\n    super.onInitState();\n  }\n\n  @override\n  void onViewDidLoad() {\n    super.onViewDidLoad();\n  }\n\n  @override\n  void onDispose() {\n    super.onDispose();\n  }\n}\n\nclass ${name}ViewData {}\n"
+		]
+	  }	
+}

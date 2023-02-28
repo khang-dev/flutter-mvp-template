@@ -1,0 +1,38 @@
+name: mobile_app
+description: A Mobile Application (Android + iOS) project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  cupertino_icons: ^1.0.2
+
+  # Core MVP
+  event_bus: ^2.0.0
+  rxdart: ^0.27.7
+  page_transition: ^2.0.9
+  flutter_screenutil: ^5.6.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.3.3
+  flutter_launcher_icons: ^0.12.0
+
+flutter:
+  uses-material-design: true
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  assets:
+    - assets/anim/
+    - assets/images/
+    - assets/svg/

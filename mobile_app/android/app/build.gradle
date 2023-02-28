@@ -1,0 +1,135 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+
+def keysPropertiesFile = rootProject.file('key.properties')
+if (keysPropertiesFile == null) {
+    throw new FileNotFoundException("key.properties not found.")
+}
+def keysProperties = new Properties()
+keysProperties.load(new FileInputStream(keysPropertiesFile))
+
+def versionsPropertiesFile = rootProject.file('versions.properties')
+if (versionsPropertiesFile == null) {
+    throw new FileNotFoundException("versions.properties not found.")
+}
+def versionsProperties = new Properties()
+versionsProperties.load(new FileInputStream(versionsPropertiesFile))
+
+def buildVersionCode = Integer.parseInt(new Date().format('MMddHHmm'))
+
+android {
+    compileSdkVersion 33
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "com.example.mobile_app.dev"
+        minSdkVersion 23
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        releaseDev {
+            keyAlias keysProperties['keyAlias_DEV']
+            keyPassword keysProperties['keyPassword_DEV']
+            storeFile file(keysProperties['storeFile_DEV'])
+            storePassword keysProperties['storePassword_DEV']
+        }
+        releaseProd {
+            keyAlias keysProperties['keyAlias_PROD']
+            keyPassword keysProperties['keyPassword_PROD']
+            storeFile file(keysProperties['storeFile_PROD'])
+            storePassword keysProperties['storePassword_PROD']
+        }
+    }
+
+    flavorDimensions 'app'
+
+    productFlavors {
+        dev {
+            dimension 'app'
+            applicationId 'com.example.mobile_app.dev'
+            versionCode buildVersionCode
+            versionName versionsProperties['versionName']
+            signingConfig signingConfigs.releaseDev
+        }
+        prod {
+            dimension 'app'
+            applicationId 'com.example.mobile_app'
+            versionCode versionsProperties['versionCode'].toInteger()
+            versionName versionsProperties['versionName']
+            signingConfig signingConfigs.releaseProd
+        }
+    }
+
+    buildTypes {
+        profile {
+            minifyEnabled false
+            shrinkResources false
+
+            // Set to null to override default debug keystore and defer to the product flavor.
+            signingConfig null
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+
+            // Set to null to override default debug keystore and defer to the product flavor.
+            signingConfig null
+        }
+        release {
+            minifyEnabled true
+            shrinkResources false
+            // Set to null to override default debug keystore and defer to the product flavor.
+            signingConfig null
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
