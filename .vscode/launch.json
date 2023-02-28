@@ -19,6 +19,7 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
+            "program": "mobile_app/lib/main_prod.dart",
             "args": [
                 "-t",
                 "lib/main_prod.dart",
