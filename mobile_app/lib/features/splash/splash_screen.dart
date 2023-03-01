@@ -32,7 +32,7 @@ class SplashScreenState extends BaseViewState<SplashScreen, SplashPresenter> imp
 
   @override
   Widget buildContent(BuildContext context) {
-    return Container();
+    return const Scaffold();
   }
 
   @override

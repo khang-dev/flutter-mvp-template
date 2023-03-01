@@ -1,4 +1,7 @@
+import 'package:mobile_app/features/dashboard/dashboard_screen.dart';
+
 import '../../../core/mvp/base_presenter.dart';
+import '../../app/app_view.dart';
 import 'splash_screen.dart';
 
 class SplashPresenter extends BasePresenter<SplashUI> {
@@ -9,10 +12,13 @@ class SplashPresenter extends BasePresenter<SplashUI> {
   //   super.onInitState();
   // }
 
-  // @override
-  // void onViewDidLoad() {
-  //   super.onViewDidLoad();
-  // }
+  @override
+  void onViewDidLoad() {
+    super.onViewDidLoad();
+    Future.delayed(const Duration(milliseconds: 300), () {
+      Application.navigator.pushReplacementNamed(DashboardScreen.routeName);
+    });
+  }
 
   // @override
   // void onDispose() {

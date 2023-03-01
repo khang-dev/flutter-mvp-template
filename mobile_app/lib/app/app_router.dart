@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/features/splash/splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import '../core/data_store/navigation_store.dart';
+import '../features/dashboard/dashboard_screen.dart';
 
 class AppRouter with NavigationStore {
-  final Map<String, Widget Function()> _fadeAnimatedRoutes = {};
+  final Map<String, Widget Function()> _fadeAnimatedRoutes = {DashboardScreen.routeName: () => const DashboardScreen()};
 
   final Map<String, Widget Function()> _platformRoutes = {};
 
@@ -27,7 +28,7 @@ class AppRouter with NavigationStore {
       return routeAnimation(_fadeAnimatedRoutes[settings.name]!,
           routeName: settings.name!,
           animationType: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 150));
+          duration: const Duration(milliseconds: 200));
     }
 
     if (_platformRoutes.containsKey(settings.name)) {
