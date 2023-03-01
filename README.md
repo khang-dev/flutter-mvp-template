@@ -17,7 +17,27 @@ This is a MVP project template in Flutter
 
 ## How To Use
 
+
 Create new Flutter project repository with this template repository
+
+
+Create a key.properties (Git Ignored) and put them in your folder mobile_app/android/key.properties
+```bash
+#DEV
+storePassword_DEV=<storePassword>
+keyPassword_DEV=<keyPassword>
+keyAlias_DEV=<keyAlias>
+storeFile_DEV=<PATH_TO_FILE.keystore>
+
+#PROD
+storePassword_PROD=<storePassword>
+keyPassword_PROD=<keyPassword>
+keyAlias_PROD=<keyAlias>
+storeFile_PROD=<PATH_TO_FILE.keystore>
+```
+
+
+
 
 From your root project:
 
